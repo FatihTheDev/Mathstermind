@@ -3,6 +3,15 @@
   <head>
     <title>Mathstermind User Guide</title>
     <style>
+      #logo{
+        text-decoration: none;
+        color: rgb(26, 70, 200);
+      }
+    #logo2{
+      text-decoration: none;
+      color: #b62aba;
+    }
+
  body {
         margin: 0;
         padding: 0;
@@ -97,13 +106,13 @@
   </head>
   <body>
     <header>
-      <h1><span class="mathster">Mathster</span><span class="mind">mind</span></h1>
+      <h1><span class="mathster"><a id="logo" href="index.html">Mathster</a></span><span class="mind"><a id="logo2" href="index.html">mind</a></span></h1>
       <nav>
         <ul>
           <li><a href>What is Mathstermind?</a></li>
           <li><a href="#what-is-mathstermind">Features</a></li>
           <li><a href="#features">How to use</a></li>
-          <li><a href="#how-to-use">FAQ</a></li>
+          <li><a href="#faq">FAQ</a></li>
           <li><a href="#feedback">Feedback</a></li>
         </ul>
       </nav>
@@ -125,7 +134,7 @@
       </section>
       <section id="how-to-use">
         <h2>How to use</h2>
-        <p>To use Mathstermind, simply enter a mathematical expression in the input field provided and click the "Send" button or press Enter on your keyboard. The result will be displayed in the chat area below.</p>
+        <p>To use Mathstermind, simply enter a mathematical expression in the input field provided and click the "Send" button or press Enter on your keyboard. The result will be displayed in the chat area above.</p>
         <p>Mathstermind supports various mathematical operations, such as:</p>
         <ul>
           <li>Addition: 2 + 3</li>
@@ -138,6 +147,21 @@
           <li>Variable solving: simplify('x+3x+x')</li>
           <li>Factorials: 5!</li>
           <li>Boolean operations: 5!=3 or 4==9</li>
+          <li>Generating random whole numbers: randomInt(1,10)  //generates a random number between 1 and 10</li>
+          <li>Computing the absolute value of a number: abs(-5)</li>
+          <li>Calculating the arcsine (inverse sine) of a number in radians: asin(1)</li>
+          <li>Rounding a number to the nearest integrar: round(4.2)</li>
+          <li>Generating a random float between two numbers: random(1,8)</li>
+          <li>Generating a random float between 0 and 1: random()</li>
+          <li>Computing the sine of an angle in radians: sin(pi / 2)  //answer: 1</li>
+          <li>Calculating the dot product of two vectors: dot([1,2,3], [4,5,6])  //answer: 32</li>
+          <li>Returning the largest number in a series of numbers: max(1,2,4,6,3)  //answer: 6</li>
+          <li>Returning the smallest number in a series of numbers: min(5,2,4,6,3)  //answer: 2</li>
+          <li>Returning the sign of a number (-1 for negative numbers, 0 for zero, 1 for positive numbers)</li>
+          <li>Calculating the number of combinations of n items taken k at a time: combinations(n, k)</li>
+          <li>Calculating the number of permutations of n items taken k at a time: permutations(n, k)</li>
+          <li>Calculating the distance between two points in 2D space: distance([x1, y1], [x2, y2])</li>
+          <li>Calculating the gcd (greatest common divisor) between two numbers: gcd(a, b)</li>
         </ul>
         <p>Note that expressions must be entered in a valid format and syntax. Invalid expressions will result in an error message.</p>
         <p>Also, expressions like sqrt, sin, cos, simplify etc. are case sensitive, so sin(45) is not the same as Sin(45)!</p>
@@ -154,15 +178,15 @@
           </details>
           <details>
             <summary>How accurate are the responses from Mathstermind?</summary>
-            <p>Mathstermind is designed to provide accurate responses to mathematical expressions, but there may be cases where it cannot accurately solve a problem or provide the desired result. If you encounter any issues or errors, please let us know through the feedback button.</p>
+            <p>Mathstermind is designed to provide accurate responses to mathematical expressions, but there may be cases where it cannot accurately solve a problem or provide the desired result. If you encounter any issues or errors, please let me know through the feedback button.</p>
           </details>
           <details>
             <summary>Can I access Mathstermind on my mobile device?</summary>
-            <p>Yes, Mathstermind is accessible on mobile devices through our website. While our website is compatible with mobile devices, it's worth mentioning that the performance may not be optimized for mobile screens. The user interface may not be as user-friendly as the desktop version, and certain features may not function as smoothly on smaller screens. However, we are continuously working to enhance the mobile experience and make it more user-friendly in the future. So, while Mathstermind is available on mobile, we recommend using it on a desktop or laptop for the best performance.</p>
+            <p>Yes, Mathstermind is accessible on mobile devices through the website. While it is compatible with mobile devices, it's worth mentioning that the performance may not be optimized for mobile screens. The user interface may not be as user-friendly as the desktop version, and certain features may not function as smoothly on smaller screens. However, I am continuously working to enhance the mobile experience and make it more user-friendly in the future. So, while Mathstermind is available on mobile, it is recommended to use it on a desktop or laptop for the best performance.</p>
           </details>
           <details>
             <summary>Can I provide feedback or report an issue?</summary>
-            <p>Yes, we encourage you to provide feedback or report any issues you encounter while using Mathstermind. Simply click the "Feedback" button located at the bottom of the page and fill out the form with your comments or concerns.</p>
+            <p>Yes, you should provide feedback or report any issues you encounter while using Mathstermind. Simply click the "Feedback" button located at the bottom of the page and fill out the form with your comments or concerns.</p>
           </details>
         </div>
         <section id="feedback">
