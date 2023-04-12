@@ -172,6 +172,21 @@
        font-weight: normal;
       }
 
+       #link{
+        color: #2947b5c9;
+        text-decoration: none;
+      }
+    
+   #user-guide-button:hover{ 
+      background-color: #1b77ce; 
+      color: #ffffff;
+    }
+
+    #feedback-button:hover {
+     background-color: #346a99;
+     color: #ffffff; 
+}
+    
       /* Small screens (mobile) */
 @media only screen and (max-width: 600px) {
   body {
@@ -252,6 +267,7 @@ user-guide-button{
 
     <button id="user-guide-button" onclick="  window.location.href='User_guide.html'">User Guide</button>
     <p id="note">Note: This is only the beta version. More functionality will be added soon. If you are having any issues, feel free to click the feedback button and let me know what to improve.</p>
+      <p id="note">If you need any help, please refer to the <a id="link" href="User_guide.html">user guide</a> for further assistance.</p>
     <div class="chat-container">
      <div class="intro-message"> 
       Hello! How can I assist you today?
