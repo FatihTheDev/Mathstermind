@@ -62,7 +62,6 @@
         max-width: 90%;
         animation-duration: 1.0s;
         animation-name: slideIn;
-
       }
 
       .user-message {
@@ -117,6 +116,7 @@
         background-color: #f8f8f8;
         font-size: 16px;
         resize: none;
+        ime-mode: active;
       }
 
       button {
@@ -275,7 +275,7 @@ user-guide-button{
     </div>
     <form>
       <br>
-      <textarea id="user-input" placeholder="Enter a mathematical expression here."></textarea>
+      <textarea id="user-input" oninput="fillFunction()" placeholder="Enter a mathematical expression here."></textarea>
       <br />
       <button type="submit">Send</button>
       <button type="button" class="delete-btn">Delete</button>
@@ -288,8 +288,10 @@ user-guide-button{
       </script>
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
+    <script src="autofill.js"></script>
     <script>
       window.scrollTo(0, document.body.scrollHeight);
+
 const form = document.querySelector("form");
 const userInput = document.querySelector("#user-input");
 const chatContainer = document.querySelector(".chat-container");
