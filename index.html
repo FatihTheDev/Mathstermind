@@ -13,8 +13,6 @@
         font-weight: normal;
         font-style: normal;
 }
-
-
       html,
       body {
         margin-top: 0;
@@ -24,6 +22,16 @@
         font-family: Arial, Helvetica, sans-serif;
         background: linear-gradient(to bottom right, #edbfd0 0%, #edbab8 10%, #9f9bcf 40%, #72c0f8 60%, #afe0cd 80%, #dca3b8 100%);
 }
+
+#chat-history-container {
+  /* Add desired styles for the chat history container */
+  /* For example: */
+  padding: 10px;
+  border: 1px solid #ccc;
+  height: 200px;
+  overflow-y: auto;
+}
+
 
       .mathster{
         color:rgb(26, 70, 200);
@@ -204,6 +212,9 @@
   textarea {
     width: 100%;
   }
+  .new-chat-button {
+      font-size: 10px;
+    }
 
 user-guide-button{
         background-color: #1b77ce;
@@ -241,6 +252,9 @@ user-guide-button{
   textarea {
     width: 60%;
   }
+  .new-chat-button {
+      font-size: 14px;
+    }
 }
 
 /* Large screens (desktops) */
@@ -260,9 +274,133 @@ user-guide-button{
   textarea {
     width: 72%;
   }
+  .new-chat-button {
+      font-size: 17px;
+    }
 }
+
+.sidebar {
+    background-color: #f1f1f1;
+    width: 20%;
+    min-width: 200px;
+    max-width: 400px;
+    height: 100%;
+    overflow-y: scroll;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: width 0.3s ease-in-out;
+    cursor: col-resize; 
+  }
+
+  .content {
+    margin-left: 20%;
+    transition: margin-left 0.3s ease-in-out;
+  }
+
+  .sidebar.sidebar-expanded {
+    width: 30%;
+    min-width: 200px;
+    max-width: 500px;
+  }
+
+  .content.content-expanded {
+    margin-left: 30%;
+  }
+
+  .new-chat-button {
+    background-color: rgb(45, 100, 128);
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .sidebar {
+    background-color: #f1f1f1;
+    width: 20%;
+    min-width: 200px;
+    max-width: 400px;
+    height: 100%;
+    overflow-y: scroll;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: width 0.3s ease-in-out;
+    cursor: col-resize;
+  }
+
+  .sidebar.sidebar-expanded {
+    width: 30%;
+    min-width: 200px;
+    max-width: 500px;
+  }
+
+  .sidebar h2 {
+    color: #333;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  #quick-tips-container {
+    overflow-y: auto;
+  }
+
+  #quick-tips {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+}
+
+#quick-tips p {
+  margin: 0;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  line-height: 1.4;
+}
+
+  #quick-tips p:first-child {
+    margin-top: 0;
+  }
+
+  #quick-tips p:last-child {
+    margin-bottom: 0;
+  }
+
   </style>
   <body>
+
+    <div class="sidebar" id="sidebar">
+      <h2>Quick Tips and Formulas</h2>
+      <div id="quick-tips-container">
+        <div id="quick-tips">
+          <p>Tip 1: Use parentheses to group expressions.</p>
+          <p>Tip 2: Use "^" for exponentiation.</p>
+          <p>Tip 3: Use "sqrt()" for square roots.</p>
+          <p>Tip 4: Use "sin()", "cos()", and "tan()" for trigonometric functions.</p>
+          <p>Tip 5: To calculate the area of a triangle, use the formula: A = 0.5 * base * height.</p>
+          <p>Tip 6: The Pythagorean theorem states that in a right triangle, the square of the length of the hypotenuse is equal to the sum of the squares of the other two sides: a² + b² = c².</p>
+          <p>Tip 7: The circumference of a circle can be calculated using the formula: C = 2 * π * r, where π (pi) is approximately 3.14159 and r is the radius.</p>
+          <p>Tip 8: To convert degrees to radians, use the formula: radians = (degrees * π) / 180.</p>
+          <p>Tip 9: The quadratic formula can be used to solve quadratic equations of the form ax² + bx + c = 0. It is: x = (-b ± sqrt(b² - 4ac)) / (2a).</p>
+          <p>Tip 10: The sum of an arithmetic series can be calculated using the formula: S = (n / 2) * (2a + (n - 1)d), where n is the number of terms, a is the first term, and d is the common difference.</p>
+        </div>
+      </div>
+    </div>
+    
+   
+
+    <div class="content" id="content">
     <h1><span class="mathster">Mathster</span><span class="mind">mind</span></h1><img src="beta.png"  style="width: 125px; height: 28px; padding-left: 15px;"><img>
 
     <button id="user-guide-button" onclick="  window.location.href='User_guide.html'">User Guide</button>
@@ -291,6 +429,36 @@ user-guide-button{
     <script src="autofill.js"></script>
     <script>
       window.scrollTo(0, document.body.scrollHeight);
+
+      let chatHistory = [];
+let recordingChat = false;
+
+    // JavaScript code to adjust sidebar width by mouse dragging
+    const sidebar = document.getElementById('sidebar');
+    const content = document.getElementById('content');
+    let isResizing = false;
+    let sidebarWidth = sidebar.offsetWidth;
+
+    sidebar.addEventListener('mousedown', function (e) {
+      isResizing = true;
+      sidebarWidth = e.clientX;
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!isResizing)
+        return;
+      const sidebarMinWidth = 200;
+      const sidebarMaxWidth = 500;
+      const contentMargin = 10;
+      const minWidthDiff = sidebarMinWidth - contentMargin;
+      const maxWidthDiff = sidebarMaxWidth - contentMargin;
+      const newWidth = Math.max(minWidthDiff, Math.min(maxWidthDiff, e.clientX - contentMargin));
+      sidebar.style.width = newWidth + 'px';
+      content.style.marginLeft = newWidth + 'px';
+    });
+    document.addEventListener('mouseup', function () {
+      isResizing = false;
+    });
+
 
 const form = document.querySelector("form");
 const userInput = document.querySelector("#user-input");
@@ -324,10 +492,24 @@ function sendMessage() {
     botMessage.className = "chat-message bot-message";
     chatContainer.appendChild(botMessage);
 
+   // Add the bot message to the chat history sidebar
+   const sidebarMessage = document.createElement("div");
+    sidebarMessage.textContent = "Bot: " + result;
+    sidebarMessage.className = "sidebar-message bot-sidebar-message";
+    document.getElementById("chat-history-messages").appendChild(sidebarMessage);
+
     // scroll to the latest message
     chatContainer.scrollTop = chatContainer.scrollHeight;
   }, 0900); // 1-second delay
 
+  if (recordingChat) {
+    // Record the messages in chat history
+    const message = {
+      user: userMessage.textContent,
+      bot: result
+    };
+    chatHistory.push(message);
+  }
 }
 
 function deleteChatHistory() {
@@ -344,7 +526,44 @@ function deleteChatHistory() {
 
   // scroll to the latest message
   chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    // remove all sidebar messages
+    const sidebarMessages = document.querySelectorAll("#sidebar .sidebar-message");
+  sidebarMessages.forEach((message) => {
+    message.remove();
+  });
 }
+
+// load chat history function
+function loadChatHistory() {
+  const savedMessages = localStorage.getItem("chatHistory");
+  if (savedMessages) {
+    const messages = JSON.parse(savedMessages);
+    messages.forEach((message) => {
+      const sidebarMessage = document.createElement("div");
+      sidebarMessage.innerHTML = message;
+      document.getElementById("sidebar").appendChild(sidebarMessage);
+    });
+  }
+}
+
+// save chat history function
+function saveChatHistory() {
+  const sidebarMessages = document.querySelectorAll("#sidebar .sidebar-message");
+  const messages = Array.from(sidebarMessages).map((message) => message.innerHTML);
+  localStorage.setItem("chatHistory", JSON.stringify(messages));
+}
+
+// add event listener to window unload to save the chat history
+window.addEventListener("unload", () => {
+  saveChatHistory();
+});
+
+
+// load chat history on page load
+window.addEventListener("load", () => {
+  loadChatHistory();
+});
 
 // send message on form submit or enter key press
 form.addEventListener("submit", (e) => {
@@ -384,6 +603,63 @@ window.addEventListener("unload", () => {
 if (localStorage.getItem("botMessageText")) {
   botMessageText = localStorage.getItem("botMessageText");
 }
+function startNewChat() {
+  // Clear existing chat history
+  chatHistory = [];
+
+  // Enable chat recording
+  recordingChat = true;     
+ }
+
+ // Stop recording chat
+function stopChatRecording() {
+  // Disable chat recording
+  recordingChat = false;
+}
+
+//show chat history
+function showChatHistory() {
+  // Get the chat history container
+  const chatHistoryContainer = document.getElementById("chat-history-container");
+
+  // Clear existing chat history
+  chatHistoryContainer.innerHTML = "";
+
+  // Create and append chat messages to the container
+  chatHistory.forEach((message) => {
+    const userMessage = document.createElement("div");
+    userMessage.innerHTML = `<strong>User:</strong> ${message.user}`;
+    chatHistoryContainer.appendChild(userMessage);
+
+    const botMessage = document.createElement("div");
+    botMessage.innerHTML = `<strong>Bot:</strong> ${message.bot}`;
+    chatHistoryContainer.appendChild(botMessage);
+  });
+
+  // Display the chat history container
+  chatHistoryContainer.style.display = "block";
+}
+
+
+// Hide chat history
+function hideChatHistory() {
+  // Hide the chat history container
+  const chatHistoryContainer = document.getElementById("chat-history");
+  chatHistoryContainer.style.display = "none";
+}
+
+// add event listener to "New Chat" button
+const newChatButton = document.getElementById("new-chat-button");
+newChatButton.addEventListener("click", () => {
+  stopChatRecording();
+  showChatHistory();
+});
+
+// add event listener to "Hide" button in chat history
+const hideButton = document.getElementById("hide-button");
+hideButton.addEventListener("click", () => {
+  hideChatHistory();
+});
     </script>
   </body>
 </html>
