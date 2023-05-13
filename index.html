@@ -23,16 +23,6 @@
         background: linear-gradient(to bottom right, #edbfd0 0%, #edbab8 10%, #9f9bcf 40%, #72c0f8 60%, #afe0cd 80%, #dca3b8 100%);
 }
 
-#chat-history-container {
-  /* Add desired styles for the chat history container */
-  /* For example: */
-  padding: 10px;
-  border: 1px solid #ccc;
-  height: 200px;
-  overflow-y: auto;
-}
-
-
       .mathster{
         color:rgb(26, 70, 200);
         display: inline-block;
@@ -430,9 +420,6 @@ user-guide-button{
     <script>
       window.scrollTo(0, document.body.scrollHeight);
 
-      let chatHistory = [];
-let recordingChat = false;
-
     // JavaScript code to adjust sidebar width by mouse dragging
     const sidebar = document.getElementById('sidebar');
     const content = document.getElementById('content');
@@ -492,24 +479,10 @@ function sendMessage() {
     botMessage.className = "chat-message bot-message";
     chatContainer.appendChild(botMessage);
 
-   // Add the bot message to the chat history sidebar
-   const sidebarMessage = document.createElement("div");
-    sidebarMessage.textContent = "Bot: " + result;
-    sidebarMessage.className = "sidebar-message bot-sidebar-message";
-    document.getElementById("chat-history-messages").appendChild(sidebarMessage);
-
     // scroll to the latest message
     chatContainer.scrollTop = chatContainer.scrollHeight;
-  }, 0900); // 1-second delay
+  }, 900); // 900 miliseconds delay
 
-  if (recordingChat) {
-    // Record the messages in chat history
-    const message = {
-      user: userMessage.textContent,
-      bot: result
-    };
-    chatHistory.push(message);
-  }
 }
 
 function deleteChatHistory() {
@@ -524,46 +497,9 @@ function deleteChatHistory() {
   newBotMessage.className = "chat-message bot-message";
   chatContainer.appendChild(newBotMessage);
 
-  // scroll to the latest message
-  chatContainer.scrollTop = chatContainer.scrollHeight;
 
-    // remove all sidebar messages
-    const sidebarMessages = document.querySelectorAll("#sidebar .sidebar-message");
-  sidebarMessages.forEach((message) => {
-    message.remove();
-  });
 }
 
-// load chat history function
-function loadChatHistory() {
-  const savedMessages = localStorage.getItem("chatHistory");
-  if (savedMessages) {
-    const messages = JSON.parse(savedMessages);
-    messages.forEach((message) => {
-      const sidebarMessage = document.createElement("div");
-      sidebarMessage.innerHTML = message;
-      document.getElementById("sidebar").appendChild(sidebarMessage);
-    });
-  }
-}
-
-// save chat history function
-function saveChatHistory() {
-  const sidebarMessages = document.querySelectorAll("#sidebar .sidebar-message");
-  const messages = Array.from(sidebarMessages).map((message) => message.innerHTML);
-  localStorage.setItem("chatHistory", JSON.stringify(messages));
-}
-
-// add event listener to window unload to save the chat history
-window.addEventListener("unload", () => {
-  saveChatHistory();
-});
-
-
-// load chat history on page load
-window.addEventListener("load", () => {
-  loadChatHistory();
-});
 
 // send message on form submit or enter key press
 form.addEventListener("submit", (e) => {
@@ -603,63 +539,6 @@ window.addEventListener("unload", () => {
 if (localStorage.getItem("botMessageText")) {
   botMessageText = localStorage.getItem("botMessageText");
 }
-function startNewChat() {
-  // Clear existing chat history
-  chatHistory = [];
-
-  // Enable chat recording
-  recordingChat = true;     
- }
-
- // Stop recording chat
-function stopChatRecording() {
-  // Disable chat recording
-  recordingChat = false;
-}
-
-//show chat history
-function showChatHistory() {
-  // Get the chat history container
-  const chatHistoryContainer = document.getElementById("chat-history-container");
-
-  // Clear existing chat history
-  chatHistoryContainer.innerHTML = "";
-
-  // Create and append chat messages to the container
-  chatHistory.forEach((message) => {
-    const userMessage = document.createElement("div");
-    userMessage.innerHTML = `<strong>User:</strong> ${message.user}`;
-    chatHistoryContainer.appendChild(userMessage);
-
-    const botMessage = document.createElement("div");
-    botMessage.innerHTML = `<strong>Bot:</strong> ${message.bot}`;
-    chatHistoryContainer.appendChild(botMessage);
-  });
-
-  // Display the chat history container
-  chatHistoryContainer.style.display = "block";
-}
-
-
-// Hide chat history
-function hideChatHistory() {
-  // Hide the chat history container
-  const chatHistoryContainer = document.getElementById("chat-history");
-  chatHistoryContainer.style.display = "none";
-}
-
-// add event listener to "New Chat" button
-const newChatButton = document.getElementById("new-chat-button");
-newChatButton.addEventListener("click", () => {
-  stopChatRecording();
-  showChatHistory();
-});
-
-// add event listener to "Hide" button in chat history
-const hideButton = document.getElementById("hide-button");
-hideButton.addEventListener("click", () => {
-  hideChatHistory();
-});
     </script>
   </body>
 </html>
