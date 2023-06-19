@@ -223,7 +223,15 @@ user-guide-button{
         cursor: pointer;
         font-size: 10px;
       }
+         .sidebar {
+        display: none;
+      }
+
+      .content {
+        margin-left: 0;
+      }
     }
+    
 
 /* Medium screens (tablets) */
 @media only screen and (min-width: 601px) and (max-width: 960px) {
@@ -245,7 +253,15 @@ user-guide-button{
   .new-chat-button {
       font-size: 14px;
     }
-}
+       .sidebar {
+        display: none;
+      }
+
+      .content {
+        margin-left: 0;
+      }
+    }
+
 
 /* Large screens (desktops) */
 @media only screen and (min-width: 961px) {
@@ -270,7 +286,7 @@ user-guide-button{
 }
 
 .sidebar {
-    background: linear-gradient(to right, #E6F2FF, #F2F2F2); 
+    background-color: #f1f1f1;
     width: 20%;
     min-width: 200px;
     max-width: 400px;
@@ -313,7 +329,7 @@ user-guide-button{
   }
 
   .sidebar {
-    background-color: #f1f1f1;
+    background: linear-gradient(to right, #E6F2FF, #F2F2F2); /* Replace with your desired subtle gradient colors */  
     width: 20%;
     min-width: 200px;
     max-width: 400px;
@@ -401,6 +417,7 @@ user-guide-button{
       Hello! How can I assist you today?
      </div>
     </div>
+    AnswerCoins left: <span id="answer-coin-count">20</span>
     <form>
       <br>
       <textarea id="user-input" oninput="fillFunction()" placeholder="Enter a mathematical expression here."></textarea>
@@ -412,13 +429,18 @@ user-guide-button{
       function sendFeedback(event) {
           event.preventDefault(); // prevents message from being sent to chat container
           window.location.href='https://docs.google.com/forms/d/e/1FAIpQLSffaakUz5JCB1ulpu2LoZVgInZ5YG1bNcOAt6-Dxm6gLsWnQg/viewform?usp=sf_link';
+          localStorage.setItem('answerCoins', answerCoinCount.toString());
+
   }
       </script>
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/9.4.4/math.js"></script>
     <script src="autofill.js"></script>
     <script>
+const savedAnswerCoins = localStorage.getItem('answerCoins');
+
       window.scrollTo(0, document.body.scrollHeight);
+      let answerCoinCount = 20;
 
     // JavaScript code to adjust sidebar width by mouse dragging
     const sidebar = document.getElementById('sidebar');
@@ -446,7 +468,6 @@ user-guide-button{
       isResizing = false;
     });
 
-
 const form = document.querySelector("form");
 const userInput = document.querySelector("#user-input");
 const chatContainer = document.querySelector(".chat-container");
@@ -462,6 +483,16 @@ function sendMessage() {
 
   // clear the user input field
   userInput.value = "";
+  answerCoinCount -= 1;
+  const answerCoinCountElement = document.getElementById('answer-coin-count');
+  answerCoinCountElement.textContent = answerCoinCount;
+
+  if (answerCoinCount === 0) {
+  userInput.disabled = true;
+  form.querySelector('button').disabled = true;
+}
+
+
 
   // use math.js to evaluate the user's input
   let input = userMessage.textContent;
@@ -530,15 +561,7 @@ deleteBtn.addEventListener("click", () => {
   deleteChatHistory();
 });
 
-// add event listener to window unload to save the bot message text to local storage
-window.addEventListener("unload", () => {
-  localStorage.setItem("botMessageText", botMessageText);
-});
-
-// retrieve the bot message text from local storage if it exists
-if (localStorage.getItem("botMessageText")) {
-  botMessageText = localStorage.getItem("botMessageText");
-}
+document.getElementById('answer-coin-count').textContent = answerCoinCount;
     </script>
   </body>
 </html>
