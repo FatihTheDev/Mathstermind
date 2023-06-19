@@ -184,7 +184,7 @@
      background-color: #346a99;
      color: #ffffff; 
 }
-    /* Small screens (mobile) */
+    
   @media only screen and (max-width: 600px) {
       body {
         padding-left: 11px;
@@ -209,7 +209,8 @@
     top: 20px; 
     right: 20px; 
     font-size: 10px;
-    width: 20%;
+    width: 17%;
+    font-size:70%;
   }
   
   #feedback-button {
@@ -250,15 +251,15 @@
   textarea {
     width: 60%;
   }
-  .new-chat-button {
-      font-size: 14px;
-    }
        .sidebar {
         display: none;
       }
 
       .content {
         margin-left: 0;
+      }
+      #user-guide-button{
+          width: 14%;
       }
     }
 
@@ -410,7 +411,7 @@
     <h1><span class="mathster">Mathster</span><span class="mind">mind</span></h1>
 
     <button id="user-guide-button" onclick="  window.location.href='User_guide.html'">User Guide</button>
-    <p id="note">Note: This is only the beta version. More functionality will be added soon. If you are having any issues, feel free to click the feedback button and let me know what to improve.</p>
+    <p id="note">Note: If you are having any issues, feel free to click the feedback button and let me know what to improve.</p>
       <p id="note">If you need any help, please refer to the <a id="link" href="User_guide.html">user guide</a> for further assistance.</p>
     <div class="chat-container">
      <div class="intro-message"> 
@@ -441,6 +442,17 @@ const savedAnswerCoins = localStorage.getItem('answerCoins');
 
       window.scrollTo(0, document.body.scrollHeight);
       let answerCoinCount = 20;
+      function resetAnswerCoins() {
+      const currentMonth = new Date().getMonth() + 1;
+      if (answerCoinCount === 0 && currentMonth !== resetMonth) {
+        answerCoinCount = 20;
+        localStorage.setItem('answerCoins', answerCoinCount.toString());
+        document.getElementById('answer-coin-count').textContent = answerCoinCount;
+        resetMonth = currentMonth;
+      }
+    }
+
+    setInterval(resetAnswerCoins, 1000 * 60 * 60); // Check every hour
 
     // JavaScript code to adjust sidebar width by mouse dragging
     const sidebar = document.getElementById('sidebar');
