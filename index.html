@@ -185,56 +185,43 @@
      color: #ffffff; 
 }
     
-      /* Small screens (mobile) */
 @media only screen and (max-width: 600px) {
-  body {
-    padding-left: 17px;
-  }
-
-  h1 {
-    font-size: 18px;
-  }
-
-  .chat-container {
-    width: 100%;
-  }
-
-  textarea {
-    width: 100%;
-  }
-  .new-chat-button {
-      font-size: 10px;
-    }
-
-user-guide-button{
-        background-color: #1b77ce;
-        width: 8%;
-        height: 6%;
-        align-self: center;
-        padding:5px;
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background-color: rgb(46, 67, 99);
-       color: rgb(255, 255, 255);
-       padding: 10px 20px;
-       border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 10px;
-      }
-         .sidebar {
-        display: none;
+      body {
+        padding-left: 17px;
       }
 
-      .content {
-        margin-left: 0;
+      h1 {
+        font-size: 18px;
+      }
+
+      .chat-container {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      textarea {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      #user-guide-button {
+        width: 100%;
+      }
+      .mathster{
+        font-size: 30px;
+      }
+      .mind{
+        font-size: 30px;
       }
     }
     
 
 /* Medium screens (tablets) */
-@media only screen and (min-width: 601px) and (max-width: 900px) {
+@media only screen and (min-width: 600px) and (max-width: 900px) {
   body {
     padding-left: 200px;
   }
